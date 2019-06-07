@@ -20,6 +20,15 @@ RUN aria2c -x8 https://swift.org/builds/swift-5.0-branch/ubuntu1604/swift-5.0-DE
     && swift package update \
     && swift build -Xcxx -I/opt/toolchain/usr/lib/swift -Xcxx -I/opt/toolchain/usr/lib/swift/Block
 
+# Install node.js for VSCode LeetCode
+RUN apt-get -y --no-install-recommends install \
+        nodejs \
+        npm \
+    && npm install n -g \
+    && n stable \
+    && apt purge- y nodejs npm \
+    && exec $SHELL -l
+
 # Clean up
 RUN apt-get autoremove -y \
     && apt-get clean -y \
